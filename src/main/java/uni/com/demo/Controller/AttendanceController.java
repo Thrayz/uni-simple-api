@@ -55,7 +55,7 @@ public class AttendanceController {
     @GetMapping("/list")
     public ModelAndView showAttendanceList(Model model) {
         List<Attendance> attendanceList = attendanceService.getAllAttendances();
-        ModelAndView modelAndView = new ModelAndView("attendanceList");
+        ModelAndView modelAndView = new ModelAndView("attendance-list");
         model.addAttribute("attendanceList", attendanceList);
         return modelAndView;
     }

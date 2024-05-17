@@ -2,32 +2,77 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Grades</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
 </head>
 <body>
-<h1>Grade List</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Grade</th>
-        <th>Student</th>
-        <th>Course</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="grade : ${grades}">
-        <td th:text="${grade.id}"></td>
-        <td th:text="${grade.grade}"></td>
-        <td th:text="${grade.student.name}"></td>
-        <td th:text="${grade.course.name}"></td>
-        <td>
-            <a th:href="@{/grades/edit/{id}(id=${grade.id})}">Edit</a> |
-            <a th:href="@{/grades/delete/{id}(id=${grade.id})}">Delete</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a href="/grades/add">Add New Grade</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">School Management System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/students/list}">Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/grades/list}">Grades</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/teachers/list}">Teachers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/courses/list}">Courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/attendances/list}">Attendances</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-3">
+    <h1>Grade List</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Grade</th>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="grade : ${gradeList}">
+            <td th:text="${grade.id}"></td>
+            <td th:text="${grade.value}"></td>
+            <td th:text="${grade.student.name}"></td>
+            <td th:text="${grade.course.name}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/grades/edit/{id}(id=${grade.id})}">Edit</a>
+                <a class="btn btn-danger" th:href="@{/grades/delete/{id}(id=${grade.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-success" href="/api/grades/add">Add New Grade</a>
+</div>
+
+<!-- Include Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>

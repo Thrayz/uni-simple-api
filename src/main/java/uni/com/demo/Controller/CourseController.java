@@ -15,14 +15,17 @@ import uni.com.demo.Service.TeacherService;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/courses")
 public class CourseController {
 
     private final CourseService courseService;
+    private final TeacherService teacherService;
 
-    public CourseController(CourseService courseService) {
+    @Autowired
+    public CourseController(CourseService courseService, TeacherService teacherService) {
         this.courseService = courseService;
+        this.teacherService = teacherService;
     }
 
     @PostMapping()
@@ -45,12 +48,10 @@ public class CourseController {
         return new ResponseEntity<>(courseService.updateCourse(course, id), HttpStatus.OK);
     }
 
-
-
     @GetMapping("/list")
     public ModelAndView showCourseList(Model model) {
         List<Course> courseList = courseService.getAllCourses();
-        ModelAndView modelAndView = new ModelAndView("courseList");
+        ModelAndView modelAndView = new ModelAndView("course-list");
         model.addAttribute("courseList", courseList);
         return modelAndView;
     }
@@ -60,6 +61,7 @@ public class CourseController {
         Course course = courseService.getCourseById(courseId);
         ModelAndView modelAndView = new ModelAndView("update-course");
         modelAndView.addObject("course", course);
+        modelAndView.addObject("teachers", teacherService.getAllTeachers());
         return modelAndView;
     }
 
@@ -70,6 +72,7 @@ public class CourseController {
         if (result.hasErrors()) {
             ModelAndView errorModelAndView = new ModelAndView("update-course");
             errorModelAndView.addObject("course", course);
+            errorModelAndView.addObject("teachers", teacherService.getAllTeachers());
             return errorModelAndView;
         }
         Course updatedCourse = courseService.updateCourse(course, courseId);
@@ -85,6 +88,7 @@ public class CourseController {
     @GetMapping("/add")
     public ModelAndView showAddCourseForm() {
         ModelAndView modelAndView = new ModelAndView("add-course");
+        modelAndView.addObject("teachers", teacherService.getAllTeachers());
         modelAndView.addObject("course", new Course());
         return modelAndView;
     }

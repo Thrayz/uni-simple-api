@@ -31,7 +31,10 @@ public class AttendanceServiceImpl implements AttendanceService {
     public Attendance getAttendanceById(long id) {
         return attendanceRepository.findById(id).orElse(null);
     }
-
+    @Override
+    public List<Attendance> getAttendancesForStudent(long studentId) {
+        return attendanceRepository.findByStudentId(studentId);
+    }
     @Override
     public Attendance updateAttendance(Attendance attendance, long id) {
         if (attendanceRepository.existsById(id)) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Attendances</title>
+    <title>Add/Edit Course</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -37,35 +37,27 @@
 </nav>
 
 <div class="container mt-3">
-    <h1>Attendance List</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Student</th>
-            <th>Course</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="attendance : ${attendanceList}">
-            <td th:text="${attendance.id}"></td>
-            <td th:text="${attendance.date}"></td>
-            <td th:text="${attendance.student.name}"></td>
-            <td th:text="${attendance.course.name}"></td>
-            <td th:text="${attendance.present}"></td>
-            <td>
-                <a class="btn btn-primary" th:href="@{/attendances/edit/{id}(id=${attendance.id})}">Edit</a>
-                <a class="btn btn-danger" th:href="@{/attendances/delete/{id}(id=${attendance.id})}">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a class="btn btn-success" href="/api/attendances/add">Add New Attendance</a>
+    <h1 th:text="${course.id == null ? 'Add Course' : 'Edit Course'}"></h1>
+    <form th:action="@{/api/courses/__${course.id == null ? 'add' : 'update'}__}" th:object="${course}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" />
+        </div>
+        <div class="form-group">
+            <label for="code">Code</label>
+            <input type="text" class="form-control" id="code" th:field="*{code}" />
+        </div>
+        <div class="form-group">
+            <label for="teacher">Teacher</label>
+            <select class="form-control" id="teacher" th:field="*{teacher.id}">
+                <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <a href="/api/courses/list" class="btn btn-secondary mt-3">Back to List</a>
 </div>
-
 <!-- Include Bootstrap JS and Popper.js -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

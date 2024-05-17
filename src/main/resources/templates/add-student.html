@@ -9,6 +9,34 @@
           crossorigin="anonymous">
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">School Management System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/students/list}">Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/grades/list}">Grades</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/teachers/list}">Teachers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/courses/list}">Courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/attendances/list}">Attendances</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div class="container mt-5">
     <h1 class="mb-4" th:text="${student.id == null ? 'Add Student' : 'Edit Student'}"></h1>
     <form id="studentForm" th:action="${student.id == null ? '/api/students/add' : '/api/students/update/' + student.id}"

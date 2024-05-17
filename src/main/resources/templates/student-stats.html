@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Attendances</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -35,37 +37,28 @@
         </ul>
     </div>
 </nav>
+<div class="container mt-5">
+    <h1>Statistics</h1>
+    <div class="row mt-4">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Average Grade</h5>
+                    <p class="card-text">Average grade: <span th:text="${averageGrade}"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Attendance Percentage</h5>
+                    <p class="card-text">Total attendance percentage: <span th:text="${attendancePercentage}"></span></p>
+                </div>
+            </div>
+        </div>
 
-<div class="container mt-3">
-    <h1>Attendance List</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Student</th>
-            <th>Course</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="attendance : ${attendanceList}">
-            <td th:text="${attendance.id}"></td>
-            <td th:text="${attendance.date}"></td>
-            <td th:text="${attendance.student.name}"></td>
-            <td th:text="${attendance.course.name}"></td>
-            <td th:text="${attendance.present}"></td>
-            <td>
-                <a class="btn btn-primary" th:href="@{/attendances/edit/{id}(id=${attendance.id})}">Edit</a>
-                <a class="btn btn-danger" th:href="@{/attendances/delete/{id}(id=${attendance.id})}">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a class="btn btn-success" href="/api/attendances/add">Add New Attendance</a>
+    </div>
 </div>
-
 <!-- Include Bootstrap JS and Popper.js -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

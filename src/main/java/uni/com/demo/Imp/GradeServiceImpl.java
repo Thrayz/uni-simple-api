@@ -40,7 +40,10 @@ public class GradeServiceImpl implements GradeService {
         }
         return null;
     }
-
+    @Override
+    public List<Grade> getGradesForStudent(long studentId) {
+        return gradeRepository.findByStudentId(studentId);
+    }
     @Override
     public void deleteGrade(long id) {
         gradeRepository.deleteById(id);

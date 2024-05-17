@@ -1,14 +1,16 @@
 package uni.com.demo.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import uni.com.demo.Entity.Attendance;
+import uni.com.demo.Entity.Grade;
 import uni.com.demo.Entity.Student;
+import uni.com.demo.Service.AttendanceService;
+import uni.com.demo.Service.GradeService;
 import uni.com.demo.Service.StudentService;
 
 import javax.validation.Valid;
@@ -19,9 +21,13 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final GradeService gradeService;
+    private final AttendanceService attendanceService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, GradeService gradeService, AttendanceService attendanceService) {
         this.studentService = studentService;
+        this.gradeService = gradeService;
+        this.attendanceService = attendanceService;
     }
 
     @PostMapping()
@@ -106,4 +112,32 @@ public class StudentController {
         }
         return modelAndView;
     }
+
+
+    @GetMapping("/students/{studentId}/stats")
+    public ModelAndView getStudentStats(@PathVariable long studentId) {
+        ModelAndView modelAndView = new ModelAndView("student-stats");
+
+        List<Grade> grades = gradeService.getGradesForStudent(studentId);
+        List<Attendance> attendances = attendanceService.getAttendancesForStudent(studentId);
+
+
+        double totalGrade = 0.0;
+        for (Grade grade : grades) {
+            totalGrade += grade.getValue();
+        }
+        double averageGrade = grades.isEmpty() ? 0.0 : totalGrade / grades.size();
+
+
+        int totalAttendances = attendances.size();
+        int totalPresent = (int) attendances.stream().filter(Attendance::isPresent).count();
+        double attendancePercentage = totalAttendances == 0 ? 0.0 : (double) totalPresent / totalAttendances * 100;
+
+
+        modelAndView.addObject("averageGrade", averageGrade);
+        modelAndView.addObject("attendancePercentage", attendancePercentage);
+
+        return modelAndView;
+    }
+
 }

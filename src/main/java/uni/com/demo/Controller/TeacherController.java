@@ -49,7 +49,7 @@ public class TeacherController {
     @GetMapping("/list")
     public ModelAndView showTeacherList(Model model) {
         List<Teacher> teacherList = teacherService.getAllTeachers();
-        ModelAndView modelAndView = new ModelAndView("teacherList");
+        ModelAndView modelAndView = new ModelAndView("teacher-list");
         model.addAttribute("teacherList", teacherList);
         return modelAndView;
     }

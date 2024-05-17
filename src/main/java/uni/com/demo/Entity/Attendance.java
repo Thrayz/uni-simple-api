@@ -74,4 +74,8 @@ public class Attendance {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+    public boolean isPresent() {
+        return true;
+    }
 }
