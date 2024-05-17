@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Attendances</title>
+</head>
+<body>
+<h1>Attendance List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Student</th>
+        <th>Course</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="attendance : ${attendances}">
+        <td th:text="${attendance.id}"></td>
+        <td th:text="${attendance.date}"></td>
+        <td th:text="${attendance.student.name}"></td>
+        <td th:text="${attendance.course.name}"></td>
+        <td th:text="${attendance.status}"></td>
+        <td>
+            <a th:href="@{/attendances/edit/{id}(id=${attendance.id})}">Edit</a> |
+            <a th:href="@{/attendances/delete/{id}(id=${attendance.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/attendances/add">Add New Attendance</a>
+</body>
+</html>

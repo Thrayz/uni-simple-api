@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Grade</title>
+</head>
+<body>
+<h1 th:text="${grade.id == null ? 'Add Grade' : 'Edit Grade'}"></h1>
+<form th:action="@{/grades/save}" th:object="${grade}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label>Grade</label>
+        <input type="text" th:field="*{grade}" />
+    </div>
+    <div>
+        <label>Student</label>
+        <select th:field="*{student.id}">
+            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Course</label>
+        <select th:field="*{course.id}">
+            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>
+<a href="/grades">Back to List</a>
+</body>
+</html>

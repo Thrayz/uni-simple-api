@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Attendance</title>
+</head>
+<body>
+<h1 th:text="${attendance.id == null ? 'Add Attendance' : 'Edit Attendance'}"></h1>
+<form th:action="@{/attendances/save}" th:object="${attendance}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label>Date</label>
+        <input type="date" th:field="*{date}" />
+    </div>
+    <div>
+        <label>Student</label>
+        <select th:field="*{student.id}">
+            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Course</label>
+        <select th:field="*{course.id}">
+            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Status</label>
+        <select th:field="*{present}">
+            <option value="PRESENT">Present</option>
+            <option value="ABSENT">Absent</option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>
+<a href="/attendances">Back to List</a>
+</body>
+</html>
